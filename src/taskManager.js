@@ -45,11 +45,11 @@ function project() {
 function projects() {
     let projects = [];
 
-    const addProject = (project) => projects.push(project);
+    const addProjects = (project) => projects.push(project);
     const getProjects = () => Array.from(projects);
     const removeProjects = (projectIndex) => projects.splice(projectIndex, 1);
 
-    return {addProject, getProjects, removeProjects};
+    return {addProjects, getProjects, removeProjects};
 }
 
 
