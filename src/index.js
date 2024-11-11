@@ -31,24 +31,12 @@ newProject.addTask(task3);
 newProject.addTask(task4);
 
 let secondProject = project();
-newProject.setProjectName("fitness");
+secondProject.setProjectName("fitness");
 
 newProject.getTasks().forEach(task => console.log(task.info()));
 console.log(Date());
 
 
-
-/* console.log("hello");
-let task = createTask();
-task.setTitle("sleep");
-let newProject = project();
-newProject.setProjectName("lazyness");
-newProject.addTask(task);
-let allProjects = projects()
-allProjects.addProject(newProject);
-console.log(allProjects.getProjects()[0].getTasks()[0].info());
-let date = new Date(2024, 6, 2);
-console.log(format(date,"MM/dd/yy")); */
 
 function dispalyController() {
     const menu = document.querySelector(".sideBarMenu");
@@ -56,6 +44,8 @@ function dispalyController() {
     const dialog = document.querySelector("dialog");
     let allProjects = projects();
     allProjects.addProjects(newProject);
+    allProjects.addProjects(secondProject);
+    selectProject(allProjects);
     menu.addEventListener("click", (e) => {
         if (e.target.className === "today") {
             displayTodayTasks(content, allProjects);
@@ -82,7 +72,9 @@ function dispalyController() {
             dialog.close();
         } else if (e.target.className.includes("add")) {
             e.preventDefault();
-            addToPreject(allProjects, "lazyness", addNewTask());
+            let project = document.querySelector("#project").value;
+            console.log(project);
+            addToPreject(allProjects, project, addNewTask());
         }
     })
 
@@ -210,6 +202,16 @@ function addToPreject(projects, projectName, task) {
         if (project.getProjectName() === projectName) {
             project.addTask(task)
         }
+    })
+}
+
+function selectProject(projects) {
+    const select = document.querySelector("#project");
+    projects.getProjects().forEach(project => {
+        const opt = document.createElement("option");
+        opt.textContent = project.getProjectName();
+        opt.setAttribute("value", project.getProjectName());
+        select.appendChild(opt);
     })
 }
 dispalyController();
