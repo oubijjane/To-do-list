@@ -1,0 +1,5 @@
+dialog div {
+    display: grid;
+    grid-template-columns: 100pxpx 100px;
+    margin-bottom: 5px;
+}

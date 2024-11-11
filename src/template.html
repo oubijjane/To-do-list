@@ -18,7 +18,33 @@
         <button>home</button>
     </div>
     <div class="content">
-        <button class=".add">+</button>
+        <dialog>
+            <button class="close" autofocus>Close</button>
+            <form method="post">
+                <div>
+                    <label for="title">task</label>
+                    <input type="text" id="title">
+                </div>
+                <div>
+                    <label for="dueDate">due date</label>
+                    <input type="date" id="dueDate">
+                </div>
+                <div>
+                    <label for="description">description</label>
+                    <textarea id="description" name="description" rows="4" cols="50"></textarea>
+                </div>
+                <div>
+                    <label for="priority">priority</label>
+                    <select name="priority" id="priority">
+                        <option value="high">high</option>
+                        <option value="mid">mid</option>
+                        <option value="low">low</option>
+                      </select>
+                </div>
+                <button type="submit" class="add">Confirm</button>
+            </form>
+        </dialog>
+        <button class="open">+</button>
     </div>
 
 </body>
