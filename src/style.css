@@ -7,16 +7,20 @@ body {
 
 dialog div {
     display: grid;
-    grid-template-columns: 100pxpx 100px;
+    grid-template-columns: 100px 100px;
     margin-bottom: 5px;
 }
+
 body {
     display: grid;
-    grid-template-columns: 0.3fr 2fr;
+    grid-template-columns: 150px 2fr;
+    background-color: #a7aecc34;
+
 }
 .sideBarMenu {
     background-color: rgba(238, 238, 238, 0.438);
-    margin-top: 10px;
+    border-right: 2px solid #6283aa;
+    padding-top: 10px;
 }
 .sideBarMenu div {
     display: grid;
@@ -27,15 +31,48 @@ button {
     margin: 2px;
     border: none;
     border-bottom: 1px solid;
+    background-color: #6282aa00;
 
 }
 .card {
-    border: 5px solid black;
+    border: 3px solid #6283aa;
+    background-color: #a7aecc34;
+    padding: 5px 5px 10px 5px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .content {
+    padding: 5px;
     display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns:200px;
-    grid-auto-rows:200px;
+    grid-template-columns:repeat(auto-fill, 200px);
+    grid-auto-rows:0.3fr;
+    justify-content: space-between;
     gap: 5px;
 }
+
+dialog {
+    border: 3px solid #6283aa;
+    background-color: #dbdeec;
+    padding: 5px 5px 10px 5px;
+    border-radius: 15px;
+    width: 400px;
+}
+form input,textarea,select {
+    background-color: #ececec7a;
+    border: 2px solid #6283aa;
+    border-radius: 7px;
+}
+.buttons {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 1fr 1fr;
+}
+textarea {
+    width: 300px;
+}
+
+p {
+    white-space: pre-line; /* Allows \n to render as line breaks */
+  }

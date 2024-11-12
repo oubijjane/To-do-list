@@ -58,11 +58,13 @@ function dispalyController() {
         } if (e.target.className === "logbook") {
             displayTasks(content, getDueTasks(allProjects.getProjects()));
             return;
-        }if(e.target.className === "project") {
-            displayTasks(content,getprojectTasks(e.target.textContent,allProjects));
-        } 
-        
+        } if (e.target.className === "project") {
+            displayTasks(content, getprojectTasks(e.target.textContent, allProjects));
+        }
+
         if (e.target.className === "open") {
+            const dueDate = document.querySelector("#dueDate");
+            dueDate.value = format(Date(), "yyyy-MM-dd");
             selectProject(allProjects);
             dialog.showModal();
         } else if (e.target.className.includes("close")) {
@@ -81,7 +83,7 @@ function dispalyController() {
             e.preventDefault();
             let projectName = document.querySelector("#projectName").value;
             console.log(projectName);
-            addNewProject(projectName,allProjects);
+            addNewProject(projectName, allProjects);
             displayProjects(allProjects);
         }
     });
@@ -131,17 +133,30 @@ function displayTasks(content, tasks) {
         const taskDate = document.createElement("p");
         const taskDescription = document.createElement("p");
         const taskPriority = document.createElement("p");
+        const div2 = document.createElement("div");
+        const edit = document.createElement("button");
+        const remove = document.createElement("button");
 
-        taskTitle.textContent = task.getTitle();
-        taskDate.textContent = task.getDueDate();
-        taskDescription.textContent = task.getDescription();
-        taskPriority.textContent = task.getPriority();
+        div2.className = "buttons";
+
+        edit.className = "edit";
+        edit.textContent = "edit";
+
+        remove.className = "remove";
+        remove.textContent = "remove";
+
+        taskTitle.textContent = "task: " + task.getTitle();
+        taskDate.textContent = "due date:\n" + task.getDueDate();
+        taskDescription.textContent ="description:\n" + task.getDescription();
+        taskPriority.textContent = "priority: " + task.getPriority();
 
         div.className = "card";
         div.appendChild(taskTitle);
         div.appendChild(taskDate);
         div.appendChild(taskDescription);
         div.appendChild(taskPriority);
+        div2.append(remove, edit);
+        div.appendChild(div2);
         content.appendChild(div);
     }
     );
@@ -186,7 +201,7 @@ function addNewProject(projectName, projects) {
     myProject.setProjectName(projectName);
 
     projects.addProjects(myProject);
-} 
+}
 function displayProjects(projects) {
     const div = document.querySelector(".projects");
     div.replaceChildren();
@@ -197,12 +212,12 @@ function displayProjects(projects) {
         div.appendChild(btn);
     })
 }
-function getprojectTasks(projectName,projects) {
+function getprojectTasks(projectName, projects) {
     let taskList = [];
     projects.getProjects().forEach(project => {
-       if(project.getProjectName() === projectName) {
-        project.getTasks().forEach(task => taskList.push(task));
-       }
+        if (project.getProjectName() === projectName) {
+            project.getTasks().forEach(task => taskList.push(task));
+        }
     });
     return Array.from(taskList);
 }
