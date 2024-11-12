@@ -42,41 +42,49 @@ function dispalyController() {
     const menu = document.querySelector(".sideBarMenu");
     const content = document.querySelector(".content");
     const dialog = document.querySelector("dialog");
+    const dialog2 = document.querySelector(".dialog2");
+
     let allProjects = projects();
     allProjects.addProjects(newProject);
     allProjects.addProjects(secondProject);
-    selectProject(allProjects);
     menu.addEventListener("click", (e) => {
         if (e.target.className === "today") {
-            displayTodayTasks(content, allProjects);
+            displayTasks(content, getTodaytasks(allProjects.getProjects()));
             return;
         }
         if (e.target.className === "upcomming") {
-            displayUpcommingTasks(content, allProjects);
-            //console.log(allProjects.getProjects()[0].getTasks()[0].info());
+            displayTasks(content, getUpcomingTasks(allProjects.getProjects()));
             return;
         } if (e.target.className === "logbook") {
-            getDueTasks(allProjects.getProjects()).forEach(task => console.log(task.info()));
-            displayDueTasks(content, allProjects);
-            //console.log(allProjects.getProjects()[0].getTasks()[0].info());
+            displayTasks(content, getDueTasks(allProjects.getProjects()));
             return;
-        }
-    });
-    content.addEventListener("click", (e) => {
-        console.log(e.target.className);
-        e.target.preve
+        }if(e.target.className === "project") {
+            displayTasks(content,getprojectTasks(e.target.textContent,allProjects));
+        } 
+        
         if (e.target.className === "open") {
-            let d = "hello";
+            selectProject(allProjects);
             dialog.showModal();
         } else if (e.target.className.includes("close")) {
             dialog.close();
-        } else if (e.target.className.includes("add")) {
+        } else if (e.target.className.includes("addTask")) {
             e.preventDefault();
             let project = document.querySelector("#project").value;
             console.log(project);
             addToPreject(allProjects, project, addNewTask());
+        } if (e.target.className === "openProject") {
+            console.log("hello");
+            dialog2.showModal();
+        } else if (e.target.className.includes("close")) {
+            dialog2.close();
+        } else if (e.target.className.includes("addProject")) {
+            e.preventDefault();
+            let projectName = document.querySelector("#projectName").value;
+            console.log(projectName);
+            addNewProject(projectName,allProjects);
+            displayProjects(allProjects);
         }
-    })
+    });
 
 }
 function getTodaytasks(projects) {
@@ -109,14 +117,15 @@ function getDueTasks(projects) {
         console.log(tasksForToday);
         taskList.push(...tasksForToday);
     });
-    return Array.from(taskList)
+    return Array.from(taskList);
 }
 function eventController(inputDom, outputDom) {
     inputDom.addEvent
 }
 
-function displayTodayTasks(content, projects) {
-    getTodaytasks(projects.getProjects()).forEach(task => {
+function displayTasks(content, tasks) {
+    content.replaceChildren();
+    tasks.forEach(task => {
         const div = document.createElement("div");
         const taskTitle = document.createElement("p");
         const taskDate = document.createElement("p");
@@ -138,51 +147,7 @@ function displayTodayTasks(content, projects) {
     );
 }
 
-function displayUpcommingTasks(content, projects) {
-    getUpcomingTasks(projects.getProjects()).forEach(task => {
-        const div = document.createElement("div");
-        const taskTitle = document.createElement("p");
-        const taskDate = document.createElement("p");
-        const taskDescription = document.createElement("p");
-        const taskPriority = document.createElement("p");
 
-        taskTitle.textContent = task.getTitle();
-        taskDate.textContent = task.getDueDate();
-        taskDescription.textContent = task.getDescription();
-        taskPriority.textContent = task.getPriority();
-
-        div.className = "card";
-        div.appendChild(taskTitle);
-        div.appendChild(taskDate);
-        div.appendChild(taskDescription);
-        div.appendChild(taskPriority);
-        content.appendChild(div);
-    }
-    );
-}
-
-function displayDueTasks(content, projects) {
-    getDueTasks(projects.getProjects()).forEach(task => {
-        const div = document.createElement("div");
-        const taskTitle = document.createElement("p");
-        const taskDate = document.createElement("p");
-        const taskDescription = document.createElement("p");
-        const taskPriority = document.createElement("p");
-
-        taskTitle.textContent = task.getTitle();
-        taskDate.textContent = task.getDueDate();
-        taskDescription.textContent = task.getDescription();
-        taskPriority.textContent = task.getPriority();
-
-        div.className = "card";
-        div.appendChild(taskTitle);
-        div.appendChild(taskDate);
-        div.appendChild(taskDescription);
-        div.appendChild(taskPriority);
-        content.appendChild(div);
-    }
-    );
-}
 function addNewTask() {
     const title = document.querySelector("#title");
     const dueDate = document.querySelector("#dueDate");
@@ -207,11 +172,38 @@ function addToPreject(projects, projectName, task) {
 
 function selectProject(projects) {
     const select = document.querySelector("#project");
+    select.replaceChildren();
     projects.getProjects().forEach(project => {
         const opt = document.createElement("option");
         opt.textContent = project.getProjectName();
         opt.setAttribute("value", project.getProjectName());
         select.appendChild(opt);
     })
+}
+
+function addNewProject(projectName, projects) {
+    let myProject = project();
+    myProject.setProjectName(projectName);
+
+    projects.addProjects(myProject);
+} 
+function displayProjects(projects) {
+    const div = document.querySelector(".projects");
+    div.replaceChildren();
+    projects.getProjects().forEach((project) => {
+        const btn = document.createElement("button");
+        btn.textContent = project.getProjectName();
+        btn.className = "project";
+        div.appendChild(btn);
+    })
+}
+function getprojectTasks(projectName,projects) {
+    let taskList = [];
+    projects.getProjects().forEach(project => {
+       if(project.getProjectName() === projectName) {
+        project.getTasks().forEach(task => taskList.push(task));
+       }
+    });
+    return Array.from(taskList);
 }
 dispalyController();

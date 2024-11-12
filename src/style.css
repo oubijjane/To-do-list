@@ -1,5 +1,41 @@
+html,
+body {
+    margin:0;
+    padding:0;
+    height:100%;
+}
+
 dialog div {
     display: grid;
     grid-template-columns: 100pxpx 100px;
     margin-bottom: 5px;
+}
+body {
+    display: grid;
+    grid-template-columns: 0.3fr 2fr;
+}
+.sideBarMenu {
+    background-color: rgba(238, 238, 238, 0.438);
+    margin-top: 10px;
+}
+.sideBarMenu div {
+    display: grid;
+    padding: 5px;
+
+}
+button {
+    margin: 2px;
+    border: none;
+    border-bottom: 1px solid;
+
+}
+.card {
+    border: 5px solid black;
+}
+.content {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns:200px;
+    grid-auto-rows:200px;
+    gap: 5px;
 }
