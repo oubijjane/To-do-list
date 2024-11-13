@@ -1,8 +1,8 @@
 html,
 body {
-    margin:0;
-    padding:0;
-    height:100%;
+    margin: 0;
+    padding: 0;
+    height: 100%;
 }
 
 dialog div {
@@ -17,16 +17,19 @@ body {
     background-color: #a7aecc34;
 
 }
+
 .sideBarMenu {
     background-color: rgba(238, 238, 238, 0.438);
     border-right: 2px solid #6283aa;
     padding-top: 10px;
 }
+
 .sideBarMenu div {
     display: grid;
     padding: 5px;
 
 }
+
 button {
     margin: 2px;
     border: none;
@@ -34,6 +37,7 @@ button {
     background-color: #6282aa00;
 
 }
+
 .card {
     border: 3px solid #6283aa;
     background-color: #a7aecc34;
@@ -43,11 +47,12 @@ button {
     flex-direction: column;
     justify-content: space-between;
 }
+
 .content {
     padding: 5px;
     display: grid;
-    grid-template-columns:repeat(auto-fill, 200px);
-    grid-auto-rows:0.3fr;
+    grid-template-columns: repeat(auto-fill, 200px);
+    grid-auto-rows: 0.3fr;
     justify-content: space-between;
     gap: 5px;
 }
@@ -59,20 +64,30 @@ dialog {
     border-radius: 15px;
     width: 400px;
 }
-form input,textarea,select {
+
+form input,
+textarea,
+select {
     background-color: #ececec7a;
     border: 2px solid #6283aa;
     border-radius: 7px;
 }
+
 .buttons {
     display: grid;
     grid-auto-flow: column;
     grid-template-columns: 1fr 1fr;
 }
+
 textarea {
-    width: 300px;
+    width: 250px;
 }
 
 p {
-    white-space: pre-line; /* Allows \n to render as line breaks */
-  }
+    white-space: pre-line;
+    /* Allows \n to render as line breaks */
+}
+
+.dialog2{
+    width: 250px;
+}

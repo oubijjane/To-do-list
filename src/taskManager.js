@@ -1,9 +1,18 @@
 export  {createTask,project,projects};
+
+const IDGenerator = (function () {
+    let taskIdCounter = 0;
+
+    return {
+        generateTaskId: () => ++taskIdCounter
+    };
+})();
 function createTask() {
     let title = "";
     let description = "";
     let dueDate = "";
     let priority = "";
+    let id = "task" + IDGenerator.generateTaskId();
 
     const getTitle = () => title;
     const setTitle = (newTitle) => title = newTitle;
@@ -17,16 +26,13 @@ function createTask() {
     const getPriority = () => priority;
     const setPriority = (newPriority) => priority = newPriority;
 
-    const info = () => `Title: ${title}, Description: ${description}, Due Date: ${dueDate}, Priority: ${priority}`;
+    const getId =() => id;
 
-    return { getTitle, setTitle, getDescription, setDescription, getDueDate, setDueDate, getPriority, setPriority,info};
+    const info = () => `Title: ${title}, Description: ${description}, Due Date: ${dueDate}, Priority: ${priority}, id ${id}`;
+
+    return { getTitle, setTitle, getDescription, setDescription, getDueDate, setDueDate, getPriority, setPriority,getId, info};
 }
 
-let task = createTask();
-task.setTitle("workout");
-task.setDescription("working out my chest today");
-task.setDueDate("today");
-task.setPriority("high");
 
 function project() {
     let projectName = "";
@@ -51,6 +57,7 @@ function projects() {
 
     return {addProjects, getProjects, removeProjects};
 }
+
 
 
 
