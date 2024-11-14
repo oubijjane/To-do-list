@@ -1,6 +1,7 @@
 import "./style.css";
 import { createTask, project, projects } from "./taskManager";
 import { compareAsc, format } from "date-fns";
+import iconDelete from "./icons8-delete.svg"
 
 const elementId = (function () {
     let id = 0;
@@ -53,7 +54,10 @@ function dispalyController() {
     const dialog2 = document.querySelector(".dialog2");
     const dialog3 = document.querySelector(".editTask");
 
+    const emptyProject = project();
+
     let allProjects = projects();
+    allProjects.addProjects(emptyProject);
     allProjects.addProjects(secondProject);
     allProjects.addProjects(newProject);
     displayProjects(allProjects);
@@ -70,6 +74,12 @@ function dispalyController() {
             return;
         } if (e.target.className === "project") {
             displayTasks(content, getprojectTasks(e.target.textContent, allProjects));
+            console.log("hello");
+        } if (e.target.closest('.deleteProject')) {
+            console.log("hello");
+            let id = e.target.parentElement.parentElement.id;
+            deleteProject(allProjects, id);
+            displayProjects(allProjects);
         }
         if (e.target.className === "open") {
             const dueDate = document.querySelector("#dueDate");
@@ -77,16 +87,22 @@ function dispalyController() {
             selectProject(allProjects);
             dialog.showModal();
         } else if (e.target.className.includes("close")) {
+            cleanInputs();
             dialog.close();
         } else if (e.target.className.includes("addTask")) {
             e.preventDefault();
-            let project = document.querySelector("#project").value;
-            addToPreject(allProjects, project, addNewTask());
+            if (!isValid()) {
+                let project = document.querySelector("#project").value;
+                addToPreject(allProjects, project, addNewTask());
+                cleanInputs();
+            } else {
+                alert('Please fill in the task and due date field.');
+            }
         } else if (e.target.className.includes("editTask")) {
             e.preventDefault();
             let task = editTask(allProjects.getProjects(), elementId.getId());
             console.log("in the event " + task.info());
-            updateTask(elementId.getId(), task); 
+            updateTask(elementId.getId(), task);
 
         } if (e.target.className === "openProject") {
             dialog2.showModal();
@@ -94,9 +110,14 @@ function dispalyController() {
             dialog2.close();
         } else if (e.target.className.includes("addProject")) {
             e.preventDefault();
-            let projectName = document.querySelector("#projectName").value;
-            addNewProject(projectName, allProjects);
-            displayProjects(allProjects);
+            if (!isvalidForProject()) {
+                let projectName = document.querySelector("#projectName").value;
+                addNewProject(projectName, allProjects);
+                cleanInputs();
+                displayProjects(allProjects);
+            } else {
+                alert('Please fill in the field.');
+            }
         }
     });
     content.addEventListener("click", (e) => {
@@ -208,6 +229,12 @@ function addNewTask() {
 
     return task;
 }
+function cleanInputs() {
+    const taskForm = document.querySelector(".taskForm");
+    taskForm.reset();
+    const projectForm = document.querySelector(".projectForm");
+    projectForm.reset();
+}
 
 function removeTaskFromList(projects, id) {
 
@@ -248,6 +275,12 @@ function viewTask(projects, id, dialog) {
         })
     });
 
+}
+function isValid() {
+    const title = document.querySelector("#title");
+    const dueDate = document.querySelector("#dueDate");
+    let result = !title.value.trim() || !dueDate.value.trim();
+    return result;
 }
 function editTask(projects, id) {
     const title = document.querySelector("#title");
@@ -313,11 +346,27 @@ function addNewProject(projectName, projects) {
 function displayProjects(projects) {
     const div = document.querySelector(".projects");
     div.replaceChildren();
+    let i = 0;
     projects.getProjects().forEach((project) => {
-        const btn = document.createElement("button");
-        btn.textContent = project.getProjectName();
-        btn.className = "project";
-        div.appendChild(btn);
+        if (i > 0) {
+            const div2 = document.createElement("div");
+            const icon = document.createElement("img");
+            icon.className = "icon";
+
+            icon.setAttribute("src", iconDelete);
+            div2.id = i;
+            const deleteBtn = document.createElement("button");
+            deleteBtn.className = "deleteProject";
+            const btn = document.createElement("button");
+            btn.textContent = project.getProjectName();
+            btn.className = "project";
+
+            deleteBtn.appendChild(icon);
+            div2.appendChild(btn);
+            div2.appendChild(deleteBtn);
+            div.appendChild(div2);
+        }
+        i++;
     })
 }
 function getprojectTasks(projectName, projects) {
@@ -332,7 +381,7 @@ function getprojectTasks(projectName, projects) {
 function updateTask(id, task) {
     const div = document.querySelector("#" + id);
     div.replaceChildren();
-   const taskTitle = document.createElement("p");
+    const taskTitle = document.createElement("p");
     const taskDate = document.createElement("p");
     //const taskDescription = document.createElement("p");
     const taskPriority = document.createElement("p");
@@ -361,6 +410,20 @@ function updateTask(id, task) {
     div.appendChild(taskPriority);
     div2.append(remove, edit);
     div.appendChild(div2);
+}
+
+function deleteProject(projects, id) {
+    let deletedProject = projects.getProjects()[id];
+    console.log(deletedProject)
+    projects.removeProjects(id);
+    deletedProject.getTasks().forEach(task => projects.getProjects()[0].addTask(task));
+
+}
+function isvalidForProject() {
+    let input = document.querySelector("#projectName");
+    let result = !input.value.trim();
+
+    return result;
 }
 
 dispalyController();

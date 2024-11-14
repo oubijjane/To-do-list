@@ -24,10 +24,14 @@ body {
     padding-top: 10px;
 }
 
-.sideBarMenu div {
+.sideBarMenu>div, .tasks>div{
     display: grid;
     padding: 5px;
 
+}
+
+.tasks {
+    margin-bottom: 10px;
 }
 
 button {
@@ -86,8 +90,25 @@ textarea {
 p {
     white-space: pre-line;
     /* Allows \n to render as line breaks */
+    margin-top: 0px;
+    margin-bottom: 5px;
 }
 
 .dialog2{
     width: 250px;
+}
+
+.icon {
+    width: 15px;
+    height: 15px;
+    
+}
+.deleteProject {
+    width: 20px;
+    padding: 0px;
+    padding-bottom: 1px;
+}
+.project {
+    width: 90px;
+    margin-left: 10px;
 }

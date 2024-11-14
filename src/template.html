@@ -10,6 +10,7 @@
 <body>
     <div class="sideBarMenu">
         <div class="tasks">
+            <p>Tasks</p>
             <button class="open">new task</button>
             <div>
                 <button class="today">today</button>
@@ -18,13 +19,13 @@
             </div>
             <dialog>
                 <button class="close" autofocus>Close</button>
-                <form method="post">
+                <form class="taskForm" method="post">
                     <div>
-                        <label for="title">task</label>
+                        <label for="title" required>task</label>
                         <input type="text" id="title">
                     </div>
                     <div>
-                        <label for="dueDate">due date</label>
+                        <label for="dueDate" required>due date</label>
                         <input type="date" id="dueDate">
                     </div>
                     <div>
@@ -53,7 +54,7 @@
             <button class="openProject">new project</button>
             <dialog class="dialog2">
                 <button class="close" autofocus>Close</button>
-                <form method="post">
+                <form class="projectForm" method="post">
                     <div>
                         <label for="projectName">project</label>
                         <input type="text" id="projectName">
