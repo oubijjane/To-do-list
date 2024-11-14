@@ -2,9 +2,10 @@ export  {createTask,project,projects};
 
 const IDGenerator = (function () {
     let taskIdCounter = 0;
+    const setIdCount = (startingId) => taskIdCounter = startingId ;
 
     return {
-        generateTaskId: () => ++taskIdCounter
+        generateTaskId: () => ++taskIdCounter,setIdCount
     };
 })();
 function createTask() {
@@ -27,10 +28,11 @@ function createTask() {
     const setPriority = (newPriority) => priority = newPriority;
 
     const getId =() => id;
+    const setId = (newId) => id = newId;
 
     const info = () => `Title: ${title}, Description: ${description}, Due Date: ${dueDate}, Priority: ${priority}, id ${id}`;
 
-    return { getTitle, setTitle, getDescription, setDescription, getDueDate, setDueDate, getPriority, setPriority,getId, info};
+    return { getTitle, setTitle, getDescription, setDescription, getDueDate, setDueDate, getPriority, setPriority,getId,setId, info};
 }
 
 

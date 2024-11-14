@@ -42,7 +42,7 @@ newProject.addTask(task4);
 
 let secondProject = project();
 secondProject.setProjectName("fitness");
-secondProject.addTask(task);
+//secondProject.addTask(task);
 
 
 
@@ -53,13 +53,36 @@ function dispalyController() {
     const dialog = document.querySelector("dialog");
     const dialog2 = document.querySelector(".dialog2");
     const dialog3 = document.querySelector(".editTask");
-
-    const emptyProject = project();
+   
+    let toStore = taskObjetToData(task);
+    localStorage.setItem("test", JSON.stringify(toStore));
+    let toGet = JSON.parse(localStorage.getItem("test"));
+    /* console.log(toGet);
+    let transfor = newTask(toGet);
+    console.log(transfor);
+    console.log(task2); */
+    
 
     let allProjects = projects();
+    const emptyProject = project();
     allProjects.addProjects(emptyProject);
+    emptyProject.addTask(task2);
+    secondProject.setProjectName("fitness");
+
+    secondProject.addTask(task1);
+    localStorage.setItem("product", JSON.stringify(projectObjetToData(secondProject)));
+    let getit = JSON.parse(localStorage.getItem("product"));
+
+    console.log(getProject(getit).getProjectName());
+   
+    
+
     allProjects.addProjects(secondProject);
-    allProjects.addProjects(newProject);
+    let finalTest = projectsToData(allProjects);
+    localStorage.setItem("projects", JSON.stringify(finalTest));
+   /*  let toGet = JSON.parse(localStorage.getItem("projects"));
+    console.log(toGet); */
+    //allProjects.addProjects(newProject); 
     displayProjects(allProjects);
     menu.addEventListener("click", (e) => {
         if (e.target.className === "today") {
@@ -425,6 +448,42 @@ function isvalidForProject() {
 
     return result;
 }
+
+function taskObjetToData(task) {
+   let title = task.getTitle();
+   let description = task.getDescription();
+    let dueDate = task.getDueDate();
+    let priority = task.getPriority();
+    let id= task.getId();
+    return {title,description,dueDate,priority,id}
+}
+function getTask(task) {
+    let finalTask = createTask();
+    finalTask.setTitle(task.title);
+    finalTask.setDueDate(task.dueDate);
+    finalTask.setDescription(task.description);
+    finalTask.setPriority(task.priority);
+    
+    return finalTask;
+}
+function projectObjetToData(project) {
+    let name = project.getProjectName();
+    let tasks = project.getTasks().map(task => taskObjetToData(task));
+     return {name,tasks};
+ }
+  function getProject(fromProject) {
+    let finalProject = project();
+    finalProject.setProjectName(fromProject.name);
+    console.log("test  " + typeof fromProject.tasks);
+
+    return finalProject;
+ } 
+
+ function projectsToData(projects) {
+    let projectsList = projects.getProjects().map(project => projectObjetToData(project));
+
+    return projectsList;
+ }
 
 dispalyController();
 
