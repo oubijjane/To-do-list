@@ -77,8 +77,6 @@ function dispalyController() {
     allProjects.addProjects(secondProject);
     allProjects.addProjects(newProject);
 
-    console.log(localStorage.getItem("products"));
-
     if(localStorage.getItem("products")) {
         allProjects = dataToProjects(JSON.parse(localStorage.getItem("products")));
         console.log("getting data from storage");
