@@ -13,49 +13,6 @@ const elementId = (function () {
 })();
 
 
-window.onload = function () {
-    var reloading = sessionStorage.getItem("reloading");
-    if (reloading) {
-        
-    }
-}
-
-
-
-let task = createTask();
-task.setTitle("task1");
-task.setDueDate(format(new Date(2024, 10, 11), "yyyy-MM-dd"));
-
-let task1 = createTask();
-task1.setTitle("task2");
-task1.setDueDate(format(new Date(2024, 10, 11), "yyyy-MM-dd"));
-
-let task2 = createTask();
-task2.setTitle("task3");
-task2.setDueDate(format(new Date(2024, 10, 8), "yyyy-MM-dd"));
-
-let task3 = createTask();
-task3.setTitle("task4");
-task3.setDueDate(format(new Date(2024, 10, 23), "yyyy-MM-dd"));
-
-let task4 = createTask();
-task4.setTitle("task5");
-task4.setDueDate(format(new Date(2024, 10, 15), "yyyy-MM-dd"));
-
-let newProject = project();
-newProject.setProjectName("work");
-newProject.addTask(task1);
-newProject.addTask(task2);
-newProject.addTask(task3);
-newProject.addTask(task4);
-
-let secondProject = project();
-secondProject.setProjectName("fitness");
-//secondProject.addTask(task);
-
-
-
-
 function dispalyController() {
     sessionStorage.setItem("reloading", "true");
     const menu = document.querySelector(".sideBarMenu");
@@ -63,6 +20,12 @@ function dispalyController() {
     const dialog = document.querySelector("dialog");
     const dialog2 = document.querySelector(".dialog2");
     const dialog3 = document.querySelector(".editTask");
+
+    let newProject = project();
+    newProject.setProjectName("work");
+
+    let secondProject = project();
+    secondProject.setProjectName("fitness");
 
     let allProjects = projects();
     const emptyProject = project();
@@ -77,7 +40,7 @@ function dispalyController() {
     allProjects.addProjects(secondProject);
     allProjects.addProjects(newProject);
 
-    if(localStorage.getItem("products")) {
+    if (localStorage.getItem("products")) {
         allProjects = dataToProjects(JSON.parse(localStorage.getItem("products")));
         console.log("getting data from storage");
     }
@@ -100,7 +63,7 @@ function dispalyController() {
             console.log("hello");
             let id = e.target.parentElement.parentElement.id;
             deleteProject(allProjects, id);
-            localStorage.setItem("products",JSON.stringify(projectsToData(allProjects)));
+            localStorage.setItem("products", JSON.stringify(projectsToData(allProjects)));
             displayProjects(allProjects);
         }
         if (e.target.className === "open") {
@@ -116,7 +79,7 @@ function dispalyController() {
             if (!isValid()) {
                 let project = document.querySelector("#project").value;
                 addToPreject(allProjects, project, addNewTask());
-                localStorage.setItem("products",JSON.stringify(projectsToData(allProjects)));
+                localStorage.setItem("products", JSON.stringify(projectsToData(allProjects)));
                 cleanInputs();
             } else {
                 alert('Please fill in the task and due date field.');
@@ -126,7 +89,7 @@ function dispalyController() {
             let task = editTask(allProjects.getProjects(), elementId.getId());
             console.log("in the event " + task.info());
             updateTask(elementId.getId(), task);
-            localStorage.setItem("products",JSON.stringify(projectsToData(allProjects)));
+            localStorage.setItem("products", JSON.stringify(projectsToData(allProjects)));
 
         } if (e.target.className === "openProject") {
             dialog2.showModal();
@@ -137,7 +100,7 @@ function dispalyController() {
             if (!isvalidForProject()) {
                 let projectName = document.querySelector("#projectName").value;
                 addNewProject(projectName, allProjects);
-                localStorage.setItem("products",JSON.stringify(projectsToData(allProjects)));
+                localStorage.setItem("products", JSON.stringify(projectsToData(allProjects)));
                 cleanInputs();
                 displayProjects(allProjects);
             } else {
@@ -150,7 +113,7 @@ function dispalyController() {
             let id = e.target.parentElement.parentElement.id;
             removeTaskFromList(allProjects.getProjects(), id);
             removeTaskFromDisplay(e.target.parentElement.parentElement);
-            localStorage.setItem("products",JSON.stringify(projectsToData(allProjects)));
+            localStorage.setItem("products", JSON.stringify(projectsToData(allProjects)));
         } else if (e.target.className.includes("edit")) {
             elementId.setId(e.target.parentElement.parentElement.id);
             selectProject(allProjects);
