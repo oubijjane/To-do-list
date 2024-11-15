@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To do list</title>
+<script defer src="main.js"></script></head>
+
+<body>
+    <div class="sideBarMenu">
+        <div class="tasks">
+            <p>Tasks</p>
+            <button class="open">new task</button>
+            <div>
+                <button class="today">today</button>
+                <button class="upcomming">upcomming</button>
+                <button class="logbook">logbook</button>
+            </div>
+            <dialog>
+                <button class="close" autofocus>Close</button>
+                <form class="taskForm" method="post">
+                    <div>
+                        <label for="title" required>task</label>
+                        <input type="text" id="title">
+                    </div>
+                    <div>
+                        <label for="dueDate" required>due date</label>
+                        <input type="date" id="dueDate">
+                    </div>
+                    <div>
+                        <label for="description">description</label>
+                        <textarea id="description" name="description" rows="4" cols="50"></textarea>
+                    </div>
+                    <div>
+                        <label for="priority">priority</label>
+                        <select name="priority" id="priority">
+                            <option value="high">high</option>
+                            <option value="mid">mid</option>
+                            <option value="low">low</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="project">project</label>
+                        <select name="project" id="project">
+                        </select>
+                    </div>
+                    <button type="submit" class="addTask">Confirm</button>
+                </form>
+            </dialog>
+        </div>
+        <div class="projectsMenu">
+            <p>projects</p>
+            <button class="openProject">new project</button>
+            <dialog class="dialog2">
+                <button class="close" autofocus>Close</button>
+                <form class="projectForm" method="post">
+                    <div>
+                        <label for="projectName">project</label>
+                        <input type="text" id="projectName">
+                    </div>
+                    <button type="submit" class="addProject">Confirm</button>
+                </form>
+            </dialog>
+            <div class="projects">
+              <!--   <button class="project">fitness</button>
+                <button class="project">work</button>
+                <button class="project">home</button> -->
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        
+    </div>
+
+</body>
+
+</html>
